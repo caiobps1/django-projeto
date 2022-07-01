@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+
+load_dotenv()  #carrega as variaveis de ambiente
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z=*6+-gf1h(sa8s+#op704!=l@x%x+ftjs0hio(7@e4iz!_&6d'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', False) # se nao encontrar fica false
 
 ALLOWED_HOSTS = []
 
@@ -75,9 +78,13 @@ WSGI_APPLICATION = 'djangoweb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': os.getenv('NOME_DB'),
+        'USER': os.getenv('USER_DB'),
+        'PASSWORD': os.getenv('SENHA_DB'),
+        'HOST': os.getenv('HOST_DB'),   
+        'PORT': os.getenv('PORTA_DB'),
+    }    
 }
 
 
