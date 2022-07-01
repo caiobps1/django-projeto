@@ -1,15 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listagem de Pessoas</title>
-</head>
-<body>
-    <ul>
-        <li><a href="{% url 'principal' %}">Voltar</a></li>
-    </ul>
-    <h2>Listagem de pessoas</h2>
-</body>
-</html>
+{% extends 'principal/base.html' %}
+
+{% block titulo %}Listagem de Pessoas{% endblock %}
+
+{% block texto %}Listagem de Pessoas{% endblock %}
+
+
+{% block conteudo %}
+
+<form method="GET">
+    <input type="text" name="nome" placeholder="Buscar por nome"/>
+    <input type="Submit" value="Buscar">
+</form>
+
+<a href="{% url 'pessoa.novo' %}">Novo</a>
+    
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>Ativa</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pessoa in object_list %}
+        <tr>
+            <td>{{ pessoa.nome_completo }}</td>
+            <td>{{ pessoa.data_nascimento|date:"d/m/Y" }}</td>
+            <td>
+                {% if pessoa.ativa %}
+                Sim
+                {% else %}
+                Não 
+                {% endif %}
+            </td>
+            <td><a href="{% url 'pessoa.editar' pessoa.pk %}">Editar</a><a href="{% url 'pessoa.remover' pessoa.pk %}">Remover</a></td>
+        </tr>
+        {% endfor %}
+</table>
+
+{% endblock %}

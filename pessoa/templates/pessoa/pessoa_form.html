@@ -1,0 +1,19 @@
+{% extends 'principal/base.html' %}
+
+{% block titulo %}Cadastro de Pessoa{% endblock %}
+
+{% block texto %}Cadastro de Pessoa{% endblock %}
+
+
+{% block conteudo %}
+<a href="{% url 'pessoa.index' %}">Voltar</a>
+    
+<form method="post">
+    {% csrf_token %}
+
+{{ form.as_p }}
+
+<input type="submit" value="Salvar"></input>
+</form>
+
+{% endblock %}
